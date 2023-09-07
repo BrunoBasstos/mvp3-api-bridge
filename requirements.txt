@@ -1,0 +1,7 @@
+# /api-bridge/requirements.txt
+Flask
+Flask-Caching
+flask-restx
+flask-cors
+requests
+python-dotenv
