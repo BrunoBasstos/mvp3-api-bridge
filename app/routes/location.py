@@ -1,36 +1,27 @@
 # /api-bridge/app/routes/location.py
-from flask_restx import Namespace, Resource, fields, abort
-from app.services.location_service import get_location_data
+from flask_restx import Namespace, Resource, fields
+from app.services.location_service import search_city
 
-ns = Namespace('location', description='Operações de localidades')
-
-location_model = ns.model('Location', {
-    'cep': fields.String(required=True, description='CEP da localidade'),
-    'logradouro': fields.String(description='Logradouro'),
-    'complemento': fields.String(description='Complemento'),
-    'bairro': fields.String(description='Bairro'),
-    'localidade': fields.String(description='Localidade'),
-    'uf': fields.String(description='UF'),
-    'ibge': fields.String(description='IBGE'),
-    'gia': fields.String(description='GIA'),
-    'ddd': fields.String(description='DDD'),
-    'siafi': fields.String(description='SIAFI'),
-    'error': fields.String(description='Mensagem de erro')
+ns = Namespace('location', description='Busca de localidades/cidades')
+city_search_model = ns.model('CitySearch', {
+    'name': fields.String(required=True, description='Nome da localidade/cidade'),
+    'country': fields.String(required=True, description='País'),
+    'state': fields.String(required=True, description='Estado'),
+    'lat': fields.Float(required=True, description='Latitude'),
+    'lon': fields.Float(required=True, description='Longitude')
 })
 
 
-@ns.route('/<string:cep>')
-@ns.response(404, 'CEP não encontrado')
-@ns.param('cep', 'O CEP da localidade')
-class Location(Resource):
-    @ns.doc('get_location_data')
-    @ns.marshal_with(location_model)
-    def get(self, cep):
-        """
-        Retorna detalhes de uma localidade baseado no CEP
-        """
-        data = get_location_data(cep)
-        if "error" in data:
-            abort(404, "CEP não encontrado")
-        return data
+# busca de localidades/cidades
+@ns.route('/search/<string:city_name>')
+@ns.response(404, 'Nenhum resultado encontrado')
+@ns.param('city_name', 'Nome da localidade/cidade')
+class CitySearch(Resource):
 
+    @ns.doc('search_city')
+    @ns.marshal_list_with(city_search_model)
+    def get(self, city_name):
+        """
+        Retorna uma lista de localidades/cidades
+        """
+        return search_city(city_name)
