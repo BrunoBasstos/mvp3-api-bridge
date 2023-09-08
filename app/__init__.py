@@ -14,7 +14,7 @@ cache = Cache(app, config={'CACHE_TYPE': config.CACHE_TYPE, 'CACHE_DEFAULT_TIMEO
 app.cache = cache
 
 # Configuração do CORS
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Inicialização do Flask-RESTx API
 api = Api(app, version='1.0', title='API Bridge',
@@ -23,5 +23,5 @@ api = Api(app, version='1.0', title='API Bridge',
 
 from app.routes import location, weather
 
-api.add_namespace(location.ns, path='/api/location')
-api.add_namespace(weather.ns, path='/api/weather')
+api.add_namespace(location.ns, path='/location')
+api.add_namespace(weather.ns, path='/weather')
