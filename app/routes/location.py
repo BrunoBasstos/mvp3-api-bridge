@@ -4,6 +4,7 @@ from app.services.location_service import search_city
 
 ns = Namespace('location', description='Busca de localidades/cidades')
 city_search_model = ns.model('CitySearch', {
+    'unique_id': fields.String(required=True, description='ID único da localidade/cidade'), # 'unique_id': 'Rio de JaneiroBR-21-22.91-43.17
     'name': fields.String(required=True, description='Nome da localidade/cidade'),
     'country': fields.String(required=True, description='País'),
     'state': fields.String(required=True, description='Estado'),
