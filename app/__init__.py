@@ -21,7 +21,8 @@ api = Api(app, version='1.0', title='API Bridge',
           description='Uma API ponte para se comunicar com APIs externas (ViaCEP e OpenWeatherMap)',
           )
 
-from app.routes import location, weather
+from app.routes import location, weather, forecast
 
 api.add_namespace(location.ns, path='/location')
 api.add_namespace(weather.ns, path='/weather')
+api.add_namespace(forecast.ns, path='/forecast')
