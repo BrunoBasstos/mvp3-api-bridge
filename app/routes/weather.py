@@ -22,7 +22,9 @@ weather_model = ns.model('WeatherByLocation', {
     'pressure': fields.Integer(required=True, description='Pressão'),
     'wind_speed': fields.Float(required=True, description='Velocidade do vento'),
     'wind_deg': fields.Integer(required=True, description='Direção do vento'),
-    'clouds': fields.Integer(required=True, description='Nuvens')
+    'clouds': fields.Nested(ns.model('Clouds', {
+        'all': fields.Integer(required=True, description='Nuvens')
+    }))
 })
 
 
