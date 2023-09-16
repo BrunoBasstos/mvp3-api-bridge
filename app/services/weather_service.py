@@ -14,16 +14,15 @@ def get_weather_by_location(location):
     try:
         if cache.get(cache_key):
             return cache.get(cache_key)
-        # https://api.openweathermap.org/data/2.5/weather?q=rio+de+janeiro&appid=0f407f8dd956c7204bc02a9c3423c83c&lang=pt_br
+
         endpoint = f"{WEATHER_API_URL}/weather?q={location}&{WEATHER_API_DEFAULT_QUERYSTRING}"
         response = requests.get(endpoint)
         if response.status_code != 200:
             return {"error": "Erro ao buscar dados da API do clima."}
 
-        cache.set(cache_key, response.json(), timeout=WEATHER_CACHE_TIMEOUT)
         data = response.json()
 
-        return {
+        obj_response = {
             "name": data["name"],
             "timezone": data["timezone"],
             "dt": data["dt"],
@@ -45,6 +44,9 @@ def get_weather_by_location(location):
             "clouds": data["clouds"]["all"]
         }
 
+        cache.set(cache_key, obj_response, timeout=WEATHER_CACHE_TIMEOUT)
+        return obj_response
+
     except requests.RequestException:
         abort(500, "Erro ao buscar dados da API do clima.")
 
@@ -52,7 +54,6 @@ def get_weather_by_location(location):
 def get_weather_forecast_by_location(location):
     cache_key = f"get_weather_forecast_by_location_{location}"
     try:
-        cache.delete(cache_key)
         if cache.get(cache_key):
             return cache.get(cache_key)
 
