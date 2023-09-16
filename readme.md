@@ -1,5 +1,5 @@
 # Bridge API
-![Uploading todo-app-diagrama.png…]()
+![todo-app-diagrama](https://github.com/BrunoBasstos/mvp3-api-bridge/assets/5402439/f0340260-cebd-4848-ba37-6726972e0a44)
 
 Este é um MVP para conclusão da terceira sprint do curso de pós graduação em engenharia de software pela PUC-Rio.
 
