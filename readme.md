@@ -102,6 +102,10 @@ Antes de executar o projeto, certifique-se de ter instalado:
        executar o comando `docker start bridge-api`. Caso você queira remover o container,
        execute `docker rm -f bridge-api`.
 
+
+> **IMPORTANTE** Não esqueça criar o arquivo .env da aplicação para que ela possa inicializar e se comunicar com as demais aplicações do projeto corretamente corretamente. <br>[Clique aqui](https://home.openweathermap.org/users/sign_up) e registre-se no site da OpenWeather API para obter uma chave de acesso e preencha a variável `WEATHER_API_KEY` no arquivo .env gerado.
+
+
 ## Testes
 
 Para executar os testes, basta executar o comando `pytest` na pasta raiz do projeto.
